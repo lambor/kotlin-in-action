@@ -54,6 +54,31 @@ fun mixOptimized(c1: Color, c2: Color) =
             else -> throw Exception("Dirty color")
         }
 
+
+
+interface Expr;
+
+class Num(val value:Int):Expr {
+    override fun toString(): String {
+        return "Num($value)"
+    }
+};
+
+class Sum(val left:Expr,val right:Expr):Expr;
+
+fun eval(expr:Expr):Int = when(expr) {
+    is Num -> {
+        println("num: ${expr.value}")
+        expr.value
+    }
+    is Sum -> {
+        println("sum: ${expr.left} + ${expr.right}")
+        eval(expr.left) + eval(expr.right)
+    };
+    else ->
+            throw IllegalArgumentException("Unknown expression");
+}
+
 fun main(args: Array<String>) {
     println(Color.BLUE.rgb());
 
@@ -63,5 +88,7 @@ fun main(args: Array<String>) {
 
     println(mix(Color.BLUE, Color.YELLOW));
 
-    println(mixOptimized(Color.BLUE,Color.YELLOW))
+    println(mixOptimized(Color.BLUE,Color.YELLOW));
+
+    println(eval(Sum(Num(1),Num(2))));
 }
