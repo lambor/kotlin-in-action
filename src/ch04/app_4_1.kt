@@ -20,10 +20,7 @@ interface Focusable {
 class Button:Clickable, Focusable {
     override fun showOff() = super<Clickable>.showOff()
 
-    override fun click() {
-        throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
+    override fun click() = println("I'm clicked")
 }
 
 open class RichButton : Clickable {
@@ -56,7 +53,32 @@ interface View {
     fun restoreState(state:State) {}
 }
 
+class ButtonView:View {
+    override fun getCurrentState(): State {
+//        return ButtonState()
+        return ButtonState2()
+    }
 
+    override fun restoreState(state: State) {
+        super.restoreState(state)
+    }
+
+    class ButtonState : State //kotlin not store outter class's 'this' reference
+
+    inner class ButtonState2 : State {
+        fun getOuterReference() : ButtonView = this@ButtonView
+    }
+}
+
+sealed class Expr {
+    class Num(val value:Int) : Expr()
+    class Sum(val left:Num,val right:Num) : Expr()
+}
+
+fun eval(e:Expr):Int = when(e) {
+    is Expr.Num->e.value
+    is Expr.Sum-> eval(e.left) + eval(e.right)
+}
 
 
 fun main(args: Array<String>) {
@@ -64,4 +86,9 @@ fun main(args: Array<String>) {
     button.showOff()
     button.setFocus(true)
     button.click()
+
+    val buttonView = ButtonView()
+    val state = buttonView.getCurrentState();
+
+    println(eval(Expr.Sum(Expr.Num(1),Expr.Num(2))))
 }
