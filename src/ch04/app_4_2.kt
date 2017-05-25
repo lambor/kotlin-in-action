@@ -48,3 +48,18 @@ class MyView2 : View2 {
     constructor(value:String):super(value)
     constructor(value:String,fucked:Boolean):this(value)
 }
+
+class User3(val name:String) {
+    var address:String = "unspecified"
+    set(value) {
+        println("""
+        Address was changed for $name:
+        "$field"->"$value". """.trimIndent())
+        field = value
+    }
+}
+
+fun main(args: Array<String>) {
+    val user = User3("test")
+    user.address = "test"
+}
