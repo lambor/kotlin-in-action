@@ -17,7 +17,7 @@ data class Client2(val name:String,val postalCode: Int)
 
 //different from extend!!!
 //don't care the implement of impl class. like does the addAll method invoke the add method
-class CountingSet<T>(val innerSet: MutableCollection<T> = HashSet<T>()) : MutableCollection<T> by innerSet {
+class CountingSet<T>(private val innerSet: MutableCollection<T> = HashSet<T>()) : MutableCollection<T> by innerSet {
 
     var objectsAdded = 0
     private set
@@ -50,6 +50,7 @@ fun main(args: Array<String>) {
     set.add(client1)
     set.add(client2)
     println(set.objectsAdded)
+    val client3_2 = client3.copy(name="new hello")
 }
 
 
