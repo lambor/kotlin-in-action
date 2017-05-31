@@ -17,7 +17,7 @@ object Payroll {
 
 data class Person(val name:String) {
     companion object NameComparator : Comparator<ch04.Person> {
-        override fun compare(p0: ch04.Person?, p1: ch04.Person?): Int = p0?.name.let{""}.compareTo(p1?.name.let{""})
+        override fun compare(p0: ch04.Person?, p1: ch04.Person?): Int = (p0?.name?:"").compareTo(p1?.name?:"")
     }
 }
 
@@ -41,7 +41,7 @@ interface CheckListener {
 class CheckView {
     var listener:CheckListener? = null
     set(value) {
-        listener = value
+        value
     }
 }
 
